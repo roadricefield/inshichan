@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 import tkinter as tk
 import tkinter.ttk as ttk
 import random
 
 root = tk.Tk()
-root.geometry('1000x150')
+root.geometry('1100x250')
 root.title("院試ちゃん")
 page = tk.Frame(root)
 
@@ -368,7 +369,7 @@ incorrect_answer_list_2 = {
 
 
 
-question_num_text = tk.Label(page,text = "何問にチャレンジしますか？", font = ("",12))
+question_num_text = tk.Label(page,text = "何問にチャレンジしますか？", font = ("メイリオ",12))
 question_num_text.pack()
 
 # コンボボックスの作成(pageに配置,リストの値を編集不可(readonly)に設定)
@@ -389,7 +390,7 @@ def display_question():
 	question_num_text.destroy()
 	combo.set(combo.get())
 	global req_num
-	req_num = int(combo.get()) - 2
+	req_num = int(combo.get()) - 1
 	combo.destroy()
 	mondai_list[0].pack()
 	answer_button_list[0].pack()
@@ -408,8 +409,8 @@ def print_seikai():
 	false_button_list_2[k].destroy()
 	correct_text_list[k].pack()
 	next_button_list[k].pack()
-	k = k + 1
-	point = point + 1
+	k += 1
+	point  += 1
 
 #不正解のとき
 def print_fuseikai_1():
@@ -420,7 +421,7 @@ def print_fuseikai_1():
     false_button_list_2[k].destroy()
     incorrect_text_list[k].pack()
     next_button_list[k].pack()
-    k = k + 1
+    k += 1
 
 def print_fuseikai_2():
     global k
@@ -430,7 +431,7 @@ def print_fuseikai_2():
     false_button_list_2[k].destroy()
     incorrect_text_list[k].pack()
     next_button_list[k].pack()
-    k = k + 1
+    k += 1
 
 #次の問題を表示する関数、毎回選択肢の順番がランダムになる
 i = 0
@@ -439,60 +440,57 @@ def move_on_to_next_question():
     global req_num
     global i
     global layout
-    if i <= req_num:
+    if i <  req_num:
         correct_text_list[i].destroy()
         incorrect_text_list[i].destroy()
         next_button_list[i].destroy()
-        i = i + 1
-        if i == 85:
-            finish_text = tk.Label(page, text = "終わり" + "\n" + "正解数" + str(point) + "問/" + str(req_num + 2) + "問",font = ("",12))
-            finish_text.pack()
+        i += 1
+
+        mondai_list[i].pack()
+        layout = random.randint(1,6)
+        if layout == 1:
+            answer_button_list[i].pack()
+            false_button_list_1[i].pack()
+            false_button_list_2[i].pack()
+            
+        elif layout == 2:
+            answer_button_list[i].pack()
+            false_button_list_2[i].pack()
+            false_button_list_1[i].pack()
+
+        elif layout == 3:
+            false_button_list_1[i].pack()
+            answer_button_list[i].pack()
+            false_button_list_2[i].pack()
+            
+        elif layout == 4:               
+            false_button_list_1[i].pack()
+            false_button_list_2[i].pack()
+            answer_button_list[i].pack()
+
+        elif layout == 5:
+            false_button_list_2[i].pack()
+            false_button_list_1[i].pack()
+            answer_button_list[i].pack()
+
         else:
-            mondai_list[i].pack()
-            layout = random.randint(1,6)
-            if layout == 1:
-                answer_button_list[i].pack()
-                false_button_list_1[i].pack()
-                false_button_list_2[i].pack()
-            
-            elif layout == 2:
-                answer_button_list[i].pack()
-                false_button_list_2[i].pack()
-                false_button_list_1[i].pack()
-
-            elif layout == 3:
-                false_button_list_1[i].pack()
-                answer_button_list[i].pack()
-                false_button_list_2[i].pack()
-            
-            elif layout == 4:               
-                false_button_list_1[i].pack()
-                false_button_list_2[i].pack()
-                answer_button_list[i].pack()
-
-            elif layout == 5:
-                false_button_list_2[i].pack()
-                false_button_list_1[i].pack()
-                answer_button_list[i].pack()
-
-            else:
-                false_button_list_2[i].pack()
-                answer_button_list[i].pack()
-                false_button_list_1[i].pack()
+            false_button_list_2[i].pack()
+            answer_button_list[i].pack()
+            false_button_list_1[i].pack()
         
     else:
         correct_text_list[i].destroy()
         incorrect_text_list[i].destroy()
         next_button_list[i].destroy()
-        finish_text = tk.Label(page, text = "終わり" + "\n" + "正解数: " + str(point) + "問/" + str(req_num + 2) + "問", font = ("",12))
+        finish_text = tk.Label(page, text = "終わり" + "\n" + "正解数: " + str(point) + "問/" + str(req_num + 1) + "問", font = ("メイリオ",12))
         finish_text.pack()
 
 
-question_num_button = tk.Button(text = "決定", command = display_question,font = ("",12))
+question_num_button = tk.Button(text = "決定", command = display_question,font = ("メイリオ",12))
 question_num_button.pack()
 
 
-correct_text = tk.Label(page, text = "正解!",font = ("",12))
+correct_text = tk.Label(page, text = "正解!",font = ("メイリオ",12))
 
 n =  1
 ran_list = []
@@ -503,37 +501,37 @@ while n <= 85:
 	ran_num = random.randint(0,85 - n)
 	ran_list.append(serial_num[ran_num])
 	serial_num.remove(serial_num[ran_num])
-	n = n+1
+	n += 1
 
 
 
 
 mondai_list = [
-tk.Label(page,text = question_list[ran_list[i]],font = ("",12)) for i in range(85)
+tk.Label(page,text = question_list[ran_list[i]],font = ("メイリオ",12)) for i in range(85)
 ]
 
 answer_button_list = [
-tk.Button(text = correct_answer_list[ran_list[i]],font = ("",12),command = print_seikai) for i in range(85)
+tk.Button(text = correct_answer_list[ran_list[i]],font = ("メイリオ",12),command = print_seikai) for i in range(85)
 ]
 
 false_button_list_1 = [
-tk.Button(text = incorrect_answer_list_1[ran_list[i]],font = ("",12),command = print_fuseikai_1) for i in range(85)
+tk.Button(text = incorrect_answer_list_1[ran_list[i]],font = ("メイリオ",12),command = print_fuseikai_1) for i in range(85)
 ]
 
 false_button_list_2 = [
-tk.Button(text = incorrect_answer_list_2[ran_list[i]],font = ("",12),command = print_fuseikai_2) for i in range(85)
+tk.Button(text = incorrect_answer_list_2[ran_list[i]],font = ("メイリオ",12),command = print_fuseikai_2) for i in range(85)
 ]
 
 correct_text_list = [
-tk.Label(page, text = "正解!",font = ("",12)) for _ in range(85)
+tk.Label(page, text = "正解!",font = ("メイリオ",12)) for _ in range(85)
 ]
 
 incorrect_text_list = [
-tk.Label(page, text = "不正解:" + "\n" + correct_answer_list[ran_list[i]],font = ("",12)) for i in range(85)
+tk.Label(page, text = "不正解:" + "\n" + correct_answer_list[ran_list[i]],font = ("メイリオ",12)) for i in range(85)
 ]
 
 next_button_list =[
-tk.Button(text = "次へ", command = move_on_to_next_question,font = ("",12)) for _ in range(85)
+tk.Button(text = "次へ", command = move_on_to_next_question,font = ("メイリオ",12)) for _ in range(85)
 ]
 
 
